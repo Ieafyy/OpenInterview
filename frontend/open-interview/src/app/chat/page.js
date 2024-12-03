@@ -15,9 +15,9 @@ export default function Page() {
 
   const router = useRouter()
 
-  const username = localStorage.getItem('username')
-  const token = localStorage.getItem('token')
-  const vaga = localStorage.getItem('vaga')
+  const [username, setUsername] = useState('');
+  const [token, setToken] = useState('');
+  const [vaga, setVaga] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [allMessages, setAllMessages] = useState(['Olá! Seja bem-vindo à entrevista. Por favor, comece se apresentando, contando um pouco sobre a sua experiência e como você chegou até aqui.']);
@@ -57,6 +57,9 @@ export default function Page() {
 
   useEffect(() => {
     const _msgs = localStorage.getItem('allMessages');
+    setUsername(localStorage.getItem('username'));
+    setToken(localStorage.getItem('token'));
+    setVaga(localStorage.getItem('vaga'));
     if (!_msgs) {
       localStorage.setItem('allMessages', JSON.stringify(allMessages));
     }
@@ -110,9 +113,9 @@ export default function Page() {
           className="text-white scale-[2]"
         />
         <div className="flex gap-4 flex-col">
-        <Tooltip content={vaga} className="w-auto">
-          <Button color="primary">Detalhes da vaga</Button>
-        </Tooltip>
+          <Tooltip content={vaga} className="w-auto">
+            <Button color="primary">Detalhes da vaga</Button>
+          </Tooltip>
           <Button color="danger" onClick={handleExit}>Encerrar a entrevista</Button>
         </div>
       </div>
@@ -159,7 +162,7 @@ export default function Page() {
       </div>
 
       <ModalError label="Deseja sair?" title="Encerrar entrevista" btnValue="sair" isOpen={isOpen} onOpenChange={setIsOpen} onPress={goHome} />
-      
+
     </NextUIProvider>
   )
 }
